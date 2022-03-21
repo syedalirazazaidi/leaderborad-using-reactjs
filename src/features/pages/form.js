@@ -13,10 +13,15 @@ import { updateDoc, doc } from "firebase/firestore";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ReactPaginate from "react-paginate";
 
 import { db, increment } from "./fire_base.config";
 function Form() {
   const [player, setAllPlayer] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const userPerpage = 10;
+  const visited = pageNumber * userPerpage;
+
   React.useEffect(() => {
     getPlayerData();
   }, []);
@@ -47,7 +52,14 @@ function Form() {
   function deletePlayer(id) {
     db.collection("addnewplayer").doc(id).delete();
   }
-
+  const handlePageClick = ({ selected }) => {
+    setPageNumber(selected);
+  };
+  // const displayUsers = () =>
+  //   player.slice(visited, visited + userPerpage).map((player) => {
+  //     return hi;
+  //   });
+  const pageCount = Math.ceil(player.length / userPerpage);
   return (
     <>
       <TableContainer component={Paper}>
@@ -103,6 +115,15 @@ function Form() {
               </TableRow>
             ))}
           </TableBody>
+          {/* <ReactPaginate
+            breakLabel="..."
+            nextLabel="next "
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel=" previous"
+            renderOnZeroPageCount={null}
+          /> */}
         </Table>
       </TableContainer>
     </>
