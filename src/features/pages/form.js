@@ -9,7 +9,8 @@ import Paper from "@mui/material/Paper";
 
 import { updateDoc, doc } from "firebase/firestore";
 
-import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteIcon from "@material-ui/icons/Delete";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
