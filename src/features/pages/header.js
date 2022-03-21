@@ -22,8 +22,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 // import firebase from "firebase";
 
 import { useDispatch } from "react-redux";
-import { db } from "./fire_base.config";
+// import { db } from "./fire_base.config";
 import { addPlayer } from "../counter/counterSlice";
+import { db } from "../../fire_base.config";
 export default function Header() {
   const dispatch = useDispatch();
   const initialValues = {

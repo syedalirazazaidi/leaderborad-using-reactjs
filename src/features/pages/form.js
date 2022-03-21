@@ -15,7 +15,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ReactPaginate from "react-paginate";
 
-import { db, increment } from "./fire_base.config";
+import { db, increment } from "../../fire_base.config";
 function Form() {
   const [player, setAllPlayer] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
