@@ -20,9 +20,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 // import firebase from "firebase";
-import { db } from "./fire_base.config";
 
+import { useDispatch } from "react-redux";
+import { db } from "./fire_base.config";
+import { addPlayer } from "../counter/counterSlice";
 export default function Header() {
+  const dispatch = useDispatch();
   const initialValues = {
     participant: "",
     location: "",
@@ -32,24 +35,24 @@ export default function Header() {
   };
   const [open, setOpen] = React.useState(false);
   const [value, setValues] = React.useState(initialValues);
-  //   const [player, setAllPlayer] = React.useState([]);
-  //   React.useEffect(() => {
-  //     getPlayerData();
-  //   });
-  //   function getPlayerData() {
-  //     db.collection("leader").onSnapshot((queryOnsnapShot) => {
-  //       setAllPlayer(
-  //         queryOnsnapShot.docs.map((doc) => ({
-  //           id: doc.id,
-  //           participant: doc.data().participant,
-  //           location: doc.data().location,
-  //           units: doc.data().units,
-  //           type: doc.data().type,
-  //           points: doc.data().points,
-  //         }))
-  //       );
-  //     });
-  //   }
+  const [player, setAllPlayer] = React.useState([]);
+  React.useEffect(() => {
+    getPlayerData();
+  });
+  function getPlayerData() {
+    db.collection("leader").onSnapshot((queryOnsnapShot) => {
+      setAllPlayer(
+        queryOnsnapShot.docs.map((doc) => ({
+          id: doc.id,
+          participant: doc.data().participant,
+          location: doc.data().location,
+          units: doc.data().units,
+          type: doc.data().type,
+          points: doc.data().points,
+        }))
+      );
+    });
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -68,14 +71,14 @@ export default function Header() {
     });
   };
   const handleSubmit = (e) => {
-    console.log("e", e.target);
     e.preventDefault();
+
     db.collection("addnewplayer").add({
       participant: value.participant,
       location: value.location,
       units: value.units,
       type: value.type,
-      points: value.points,
+      points: Number(value.points),
     });
     setValues("");
   };
@@ -185,7 +188,6 @@ export default function Header() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            {/* <Button onClick={handleClose}>Disagree</Button> */}
             <Button
               onClick={handleClose}
               type="submit"

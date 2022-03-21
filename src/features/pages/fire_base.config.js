@@ -16,8 +16,4 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const auth = firebase.auth();
 
-// Increment/Decrement
-export const increment = firebase.firestore.FieldValue.increment(1);
-export const decrement = firebase.firestore.FieldValue.increment(-1);
-
 export { db };

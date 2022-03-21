@@ -7,11 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-import Stack from "@mui/material/Stack";
-// import firebase from "firebase";
-// import DeleteIcon from "@mui/icons-material/Delete";
-
-import Pagination from "@mui/material/Pagination";
+import { updateDoc, doc } from "firebase/firestore";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -37,15 +33,15 @@ function Form() {
       );
     });
   }
-  const onIncrement = (id) => {
-    const userRef = db.collection("addnewplayer").doc(id);
-    // const increment = firebase.firestore.FieldValue.player.points(1);
-    userRef.update({ fieldToDecrease: increment });
-    db.collection("addnewplayer")
-      .doc(id)
-      .update({
-        points: Number(player.points + 1),
-      });
+  const onIncrement = async (id, points) => {
+    const userDoc = doc(db, "addnewplayer", id);
+    const newFields = { points: points + 1 };
+    await updateDoc(userDoc, newFields);
+  };
+  const onDecrement = async (id, points) => {
+    const userDoc = doc(db, "addnewplayer", id);
+    const newFields = { points: points - 1 };
+    await updateDoc(userDoc, newFields);
   };
   function deletePlayer(id) {
     db.collection("addnewplayer").doc(id).delete();
@@ -82,11 +78,16 @@ function Form() {
                     exclusive
                     style={{ width: "20px" }}
                   >
-                    <ToggleButton value="minus">-</ToggleButton>
+                    <ToggleButton
+                      value="minus"
+                      onClick={() => onDecrement(player.id, player.points)}
+                    >
+                      -
+                    </ToggleButton>
                     <ToggleButton value="val">{player.points}</ToggleButton>
                     <ToggleButton
                       value="plus"
-                      onClick={() => onIncrement(player.id)}
+                      onClick={() => onIncrement(player.id, player.points)}
                     >
                       +
                     </ToggleButton>
@@ -103,12 +104,6 @@ function Form() {
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* <Pagination
-        count={3}
-        style={{ marginTop: "330px", marginLeft: "50px" }}
-        size="small"
-      /> */}
     </>
   );
 }
