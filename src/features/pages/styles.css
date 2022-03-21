@@ -1,0 +1,48 @@
+/* Pagination CSS */
+.pages {
+  padding: 12px 20px;
+  background-color:grey;
+  border-radius: 50px;
+  margin: 5px;
+  cursor: pointer;
+  color: white;
+}
+.pages:active {
+    background-color: rgb(96, 93, 158);
+  }
+.main_pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  list-style-type: none;
+  padding: 5px;
+}
+
+/* Card CSS */
+.card{
+    margin: 0 auto;
+    background-color: white;
+    width: 950px;
+    height: 600px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* HEADER CSS */
+
+.btn-close{
+  
+    background-color: rgb(96, 93, 158);
+    color: white;
+    text-transform:capitalize;
+    width:  150px;
+    padding:  10px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    margin: 0 auto
+  
+}
+

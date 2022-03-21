@@ -1,17 +1,7 @@
-// import React from "react";
 import styles from "./header.module.css";
 
 import TextField from "@mui/material/TextField";
-// function Header() {
-//   return (
-//     <div className={styles.header}>
-//       <h1>Leaderboard</h1>
-//       {/* <button>add player</button> */}
-//     </div>
-//   );
-// }
 
-// export default Header;
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -19,10 +9,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-// import firebase from "firebase";
+import "./styles.css";
 
 import { useDispatch } from "react-redux";
-// import { db } from "./fire_base.config";
+
 import { addPlayer } from "../counter/counterSlice";
 import { db } from "../../fire_base.config";
 export default function Header() {
@@ -111,7 +101,6 @@ export default function Header() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {/* <div style={{ border: "5px solid rgb(96, 93, 158)" }}> */}
         <DialogTitle
           id="alert-dialog-title"
           style={{
@@ -193,24 +182,12 @@ export default function Header() {
               onClick={handleClose}
               type="submit"
               autoFocus
-              style={{
-                backgroundColor: "rgb(96, 93, 158)",
-                color: "white",
-                textTransform: "capitalize",
-                width: " 150px",
-                padding: " 10px",
-                borderRadius: "7px",
-                cursor: "pointer",
-                fontWeight: "bold",
-                border: "none",
-                margin: "0 auto",
-              }}
+              className="btn-close"
             >
               Submit
             </Button>
           </DialogActions>
         </form>
-        {/* </div> */}
       </Dialog>
     </div>
   );

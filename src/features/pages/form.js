@@ -9,18 +9,19 @@ import Paper from "@mui/material/Paper";
 
 import { updateDoc, doc } from "firebase/firestore";
 
-// import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ReactPaginate from "react-paginate";
 
 import { db, increment } from "../../fire_base.config";
+import Pagagination from "./pagination";
+import Paginate from "./utils/paginate";
 function Form() {
-  const [player, setAllPlayer] = useState([]);
+  const [allplayer, setAllPlayer] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
-  const userPerpage = 10;
-  const visited = pageNumber * userPerpage;
+  const [pageSize, setPageSize] = useState(4);
+  const [currentPage, setCurrenPage] = useState(1);
 
   React.useEffect(() => {
     getPlayerData();
@@ -39,6 +40,8 @@ function Form() {
       );
     });
   }
+  const player = Paginate(allplayer, currentPage, pageSize);
+
   const onIncrement = async (id, points) => {
     const userDoc = doc(db, "addnewplayer", id);
     const newFields = { points: points + 1 };
@@ -52,32 +55,29 @@ function Form() {
   function deletePlayer(id) {
     db.collection("addnewplayer").doc(id).delete();
   }
-  const handlePageClick = ({ selected }) => {
-    setPageNumber(selected);
+
+  const handlePageChange = (page) => {
+    setCurrenPage(page);
   };
-  // const displayUsers = () =>
-  //   player.slice(visited, visited + userPerpage).map((player) => {
-  //     return hi;
-  //   });
-  const pageCount = Math.ceil(player.length / userPerpage);
+
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow style={{ backgroundColor: "#F7F7F7" }}>
-              <TableCell style={{ fontWeight: "bold" }}>
-                Participant Name
-              </TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Location</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Unit</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Type</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Points</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {player.map((player) => (
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow style={{ backgroundColor: "#F7F7F7" }}>
+            <TableCell style={{ fontWeight: "bold" }}>
+              Participant Name
+            </TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>Location</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>Unit</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>Type</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>Points</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {player.length !== 0 ? (
+            player.map((player) => (
               <TableRow key={player.id}>
                 <TableCell style={{ textTransform: "capitalize" }}>
                   {player.participant}
@@ -113,19 +113,20 @@ function Form() {
                   />
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-          {/* <ReactPaginate
-            breakLabel="..."
-            nextLabel="next "
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
-            pageCount={pageCount}
-            previousLabel=" previous"
-            renderOnZeroPageCount={null}
-          /> */}
-        </Table>
-      </TableContainer>
+            ))
+          ) : (
+            <p>no data in the board ...</p>
+          )}
+        </TableBody>
+      </Table>
+      {player.length !== 0 ? (
+        <Pagagination
+          playercount={player.length}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      ) : null}
     </>
   );
 }
