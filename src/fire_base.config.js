@@ -1,13 +1,14 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAqOIKeazXoABj9tzXMNaNczLaS5BJ6U6g",
+  apiKey: `${process.env.FIREBASE_KEY}`,
   authDomain: "leader-board-d69ee.firebaseapp.com",
   projectId: "leader-board-d69ee",
   storageBucket: "leader-board-d69ee.appspot.com",
   messagingSenderId: "67944596909",
-  appId: "1:67944596909:web:842f4290d58369a2ba8d24",
+  appId: `${process.env.REACT_APP_ID}`,
   measurementId: "G-9DBWEQQ69Y",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
