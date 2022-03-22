@@ -182,7 +182,19 @@ export default function Header() {
               onClick={handleClose}
               type="submit"
               autoFocus
-              className="btn-close"
+              // className="close"
+              style={{
+                backgroundColor: "rgb(96, 93, 158)",
+                color: "white",
+                textTransform: "capitalize",
+                width: " 150px",
+                padding: "10px",
+                borderRadius: "7px",
+                cursor: "pointer",
+                fontWeight: "bold",
+                border: "none",
+                margin: "0 auto",
+              }}
             >
               Submit
             </Button>

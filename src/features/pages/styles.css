@@ -31,9 +31,11 @@
 
 /* HEADER CSS */
 
-.btn-close{
+Button
+ .close{
+  /* background-color: red; */
   
-    background-color: rgb(96, 93, 158);
+    /* background-color: rgb(96, 93, 158);
     color: white;
     text-transform:capitalize;
     width:  150px;
@@ -42,7 +44,7 @@
     cursor: pointer;
     font-weight: bold;
     border: none;
-    margin: 0 auto
+    margin: 0 auto */
   
 }
 
