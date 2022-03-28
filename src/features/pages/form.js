@@ -2,43 +2,58 @@ import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 
 import { updateDoc, doc } from "firebase/firestore";
 
 import DeleteIcon from "@material-ui/icons/Delete";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ReactPaginate from "react-paginate";
 
 import { db, increment } from "../../fire_base.config";
 import Pagagination from "./pagination";
 import Paginate from "./utils/paginate";
+import { newPlayerData } from "./utils/api";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePlayer } from "./playerSlice";
+
 function Form() {
   const [allplayer, setAllPlayer] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(4);
   const [currentPage, setCurrenPage] = useState(1);
+  const dispatch = useDispatch();
+  const plyer = useSelector((state) => state.player);
 
   React.useEffect(() => {
-    getPlayerData();
+    // getPlayerData();
   }, []);
+
   function getPlayerData() {
-    db.collection("addnewplayer").onSnapshot((queryOnsnapShot) => {
-      setAllPlayer(
-        queryOnsnapShot.docs.map((doc) => ({
-          id: doc.id,
-          participant: doc.data().participant,
-          location: doc.data().location,
-          units: doc.data().units,
-          type: doc.data().type,
-          points: doc.data().points,
-        }))
-      );
-    });
+    //   plyer.players.map();
+    //   setAllPlayer(
+    //     plyer.players.map((doc) => ({
+    //       id: doc.id,
+    //       participant: doc.data().participant,
+    //       location: doc.data().location,
+    //       units: doc.data().units,
+    //       type: doc.data().type,
+    //       points: doc.data().points,
+    //     }))
+    //   );
+    // db.collection("addnewplayer").onSnapshot((queryOnsnapShot) => {
+    //   setAllPlayer(
+    //     queryOnsnapShot.docs.map((doc) => ({
+    //       id: doc.id,
+    //       participant: doc.data().participant,
+    //       location: doc.data().location,
+    //       units: doc.data().units,
+    //       type: doc.data().type,
+    //       points: doc.data().points,
+    //     }))
+    //   );
+    // });
   }
   const player = Paginate(allplayer, currentPage, pageSize);
 
@@ -52,7 +67,8 @@ function Form() {
     const newFields = { points: points - 1 };
     await updateDoc(userDoc, newFields);
   };
-  function deletePlayer(id) {
+  function deletedPlayer(id) {
+    console.log(id, "IIIIIIII");
     db.collection("addnewplayer").doc(id).delete();
   }
 
@@ -76,8 +92,8 @@ function Form() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {player.length !== 0 ? (
-            player.map((player) => (
+          {plyer.players.length !== 0 ? (
+            plyer.players.map((player) => (
               <TableRow key={player.id}>
                 <TableCell style={{ textTransform: "capitalize" }}>
                   {player.participant}
@@ -109,7 +125,7 @@ function Form() {
                 <TableCell>
                   <DeleteIcon
                     style={{ color: "red", marginLeft: "15px" }}
-                    onClick={() => deletePlayer(player.id)}
+                    onClick={() => deletedPlayer(player.id)}
                   />
                 </TableCell>
               </TableRow>

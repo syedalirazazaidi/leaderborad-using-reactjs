@@ -13,10 +13,11 @@ import "./styles.css";
 
 import { useDispatch } from "react-redux";
 
-import { addPlayer } from "../counter/counterSlice";
 import { db } from "../../fire_base.config";
+import { fetchPlayers } from "./playerSlice";
 export default function Header() {
   const dispatch = useDispatch();
+
   const initialValues = {
     participant: "",
     location: "",
@@ -28,22 +29,35 @@ export default function Header() {
   const [value, setValues] = React.useState(initialValues);
   const [player, setAllPlayer] = React.useState([]);
   React.useEffect(() => {
-    getPlayerData();
+    // getPlayerData();
   });
-  function getPlayerData() {
-    db.collection("leader").onSnapshot((queryOnsnapShot) => {
-      setAllPlayer(
-        queryOnsnapShot.docs.map((doc) => ({
-          id: doc.id,
-          participant: doc.data().participant,
-          location: doc.data().location,
-          units: doc.data().units,
-          type: doc.data().type,
-          points: doc.data().points,
-        }))
-      );
-    });
-  }
+
+  // function getPlayerData() {
+  //   plyer.players.map();
+  //   setAllPlayer(
+  //     plyer.players.map((doc) => ({
+  //       id: doc.id,
+  //       participant: doc.data().participant,
+  //       location: doc.data().location,
+  //       units: doc.data().units,
+  //       type: doc.data().type,
+  //       points: doc.data().points,
+  //     }))
+  //   );
+
+  // db.collection("leader").onSnapshot((queryOnsnapShot) => {
+  //   setAllPlayer(
+  //     queryOnsnapShot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       participant: doc.data().participant,
+  //       location: doc.data().location,
+  //       units: doc.data().units,
+  //       type: doc.data().type,
+  //       points: doc.data().points,
+  //     }))
+  //   );
+  // });
+  // }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,7 +67,6 @@ export default function Header() {
     setOpen(false);
   };
   const handleChange = (e) => {
-    console.log(e.target.name);
     setValues((prev) => {
       return {
         ...prev,
@@ -71,6 +84,8 @@ export default function Header() {
       type: value.type,
       points: Number(value.points),
     });
+    dispatch(fetchPlayers());
+
     setValues("");
   };
 

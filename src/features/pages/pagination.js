@@ -2,7 +2,9 @@ import React from "react";
 import _ from "lodash";
 import "./styles.css";
 function Pagagination({ playercount, pageSize, onPageChange, currentPage }) {
+  console.log(playercount, "VVVVVVVo");
   const pagesCount = Math.ceil(playercount / pageSize);
+  console.log(pagesCount, "ddddddddddddddddddddddd");
   if (pagesCount === 1) return null;
   const pages = _.range(1, pagesCount + 1);
 
